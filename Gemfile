@@ -32,10 +32,15 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'dotenv-rails'
 gem 'devise'
 gem 'mysql2', '~> 0.4.9'
 gem 'view_source_map'
 gem 'carrierwave', '~> 1.0'
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-facebook"
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
