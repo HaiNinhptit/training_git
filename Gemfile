@@ -40,8 +40,12 @@ gem 'carrierwave', '~> 1.0'
 gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-facebook"
-
+gem 'kaminari'
 gem 'mini_magick'
+gem 'bootstrap-kaminari-views'
+gem 'bootstrap', '~> 4.0.0'
+gem 'jquery-rails'
+gem 'ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
