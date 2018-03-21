@@ -29,6 +29,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
   mount_uploader :avatar, AvatarUploader
+  has_one :cart
 
   def self.new_with_session params, session
     super.tap do |user|

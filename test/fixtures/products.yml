@@ -1,20 +1,13 @@
-# == Schema Information
-#
-# Table name: products
-#
-#  id          :integer          not null, primary key
-#  category_id :integer
-#  name        :string(255)
-#  description :string(255)
-#  price       :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#
-
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
   category: one
+  name: MyString
+  price: 1
+  description: MyString
 
 two:
   category: two
+  name: MyString
+  price: 1
+  description: MyString
