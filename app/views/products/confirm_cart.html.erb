@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Cart confirm</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% if user_signed_in? %>
+      <% if @cart.present? %>
+        <% @cart.cart_products.each do |cart_product| %>
+          <tr>
+            <td><%= cart_product.product.name %></td>
+            <td><%= cart_product.product.price %></td>
+            <td><%= cart_product.product.description %></td>
+            <%= form_for cart_product, url: cart_products_edit_path(id: cart_product.id) do |f| %>
+              <td><%= f.number_field :quantity, min: 0 %> </td>
+              <td><%= f.submit "Change" %></td>
+            <% end %>
+            <td><%= link_to "Delete", cart_products_delete_path(id: cart_product.id), method: :delete%></td>
+          </tr>
+        <% end %>
+      <% else%>
+      <h1> Gio hang cua ban rong </h1>
+      <%end%>
+    <% else%>
+      <%if session[:cart].present?%>
+        <% session[:cart].each do |cart_product| %>
+        <%product = Product.find_by(id: cart_product['product_id'])%>
+          <tr>
+            <td><%= product.name %></td>
+            <td><%= product.price %></td>
+            <td><%= product.description %></td>
+            <%= form_tag edit_element_session_cart_path(id: cart_product['product_id']), method: :patch do %>
+              <td><%= number_field_tag :quantity, cart_product['quantity'], min: 0 %> </td>
+              <td><%= submit_tag "Change" %></td>
+            <% end %>
+            <td><%= link_to "Delete", delete_element_session_cart_path(id: cart_product['product_id']), method: :delete%></td>
+          </tr>
+        <%end%>
+      <%else%>
+        <h1>Gio hang cua ban rong</h1>
+      <%end%>
+    <% end%>
+    </tbody>
+  </table>
+    <% if user_signed_in? && session[:cart].nil?%>
+      <%= link_to "Order", order_path(id: @cart.id), method: :get%>
+    <% end%>
+    <% if session[:cart].present?%>
+      <%= link_to "Order", order_path(), method: :get%>
+    <% end%>
+</div>
+
+</body>
+</html>

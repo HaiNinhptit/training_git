@@ -11,26 +11,28 @@
 <body>
 
 <div class="container">
-  <h2>Detail product</h2>
+  <h2>Order confirm</h2>
   <table class="table">
     <thead>
       <tr>
         <th>Name</th>
         <th>Price</th>
         <th>Description</th>
-        <th></th>
+        <th>Quantity</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><%= @product.name %></td>
-        <td><%= @product.price%></td>
-        <td><%= @product.description%></td>
-        <td><%= link_to "Add to cart", add_to_cart_path(id: @product.id), method: :post%></td>
-      </tr>
+        <% @cart.cart_products.each do |cart_product| %>
+          <tr>
+            <td><%= cart_product.product.name %></td>
+            <td><%= cart_product.product.price %></td>
+            <td><%= cart_product.product.description %></td>
+            <td><%= cart_product.quantity %></td>
+          </tr>
+        <% end %>
     </tbody>
   </table>
 </div>
-
+<%= link_to "Order confirm ", order_confirm_path(id: @cart.id), method: :post%>
 </body>
 </html>

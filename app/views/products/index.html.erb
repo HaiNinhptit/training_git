@@ -9,8 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
+<%= link_to "Cart confirm", confirm_cart_path, method: :get %>
 <div class="container">
   <div>
     <%= search_form_for @q do |f| %>
@@ -44,7 +43,7 @@
           <td><%= product.name%></td>
           <td><%= product.price%></td>
           <td><%= product.description%></td>
-          <td><%= link_to "Add to cart" %></td>
+          <td><%= link_to "Add to cart", add_to_cart_path(id: product.id), method: :post, data: {confirm: "Are you sure?"} %></td>
           <td><%= link_to "Show", product_path(product) %></td>
         </tr>
       <% end %>

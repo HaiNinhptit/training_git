@@ -30,6 +30,7 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
   has_one :cart
+  has_many :orders
 
   def self.new_with_session params, session
     super.tap do |user|

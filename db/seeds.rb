@@ -5,13 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-categories = Category.create([
-                                {'id' => 1, 'name' => 'Giày thể thao nữ'},
-                                {'id' => 2, 'name' => 'Giày cao nữ'},
-                                {'id' => 3, 'name' => 'Giày bệt nữ'},
-                                {'id' => 4, 'name' => 'Giày thể thao nam'},
-                                {'id' => 5, 'name' => 'Giày da nam' },
-                                {'id' => 6, 'name' => 'Giày thể thao trẻ em' }
+categories = Category.create([{ 'name' => 'Giày thể thao nữ'},
+                              {'name' => 'Giày cao nữ'},
+                              {'name' => 'Giày bệt nữ'},
+                              {'name' => 'Giày thể thao nam'},
+                              {'name' => 'Giày da nam'},
+                              {'name' => 'Giày thể thao trẻ em'}
                             ])
 
 products = Product.create([
