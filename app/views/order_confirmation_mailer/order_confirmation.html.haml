@@ -1,0 +1,17 @@
+Hi #{@user.name}
+
+I send you a list of the product you have ordered
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Price
+      %th Description
+      %th Quantity
+  %tbody
+    - @order.order_products.each do |order_product|
+      %tr
+        %td= order_product.product.name
+        %td= order_product.product.price
+        %td= order_product.product.description
+        %td= order_product.quantity
