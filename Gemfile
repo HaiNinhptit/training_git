@@ -55,6 +55,9 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'annotate'
+  gem 'rspec-rails', '~> 3.7'
+  gem 'factory_girl_rails'
+  gem 'faker'
 end
 
 group :development do
@@ -65,6 +68,12 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'letter_opener_web', '~> 1.0'
+end
+
+group :test do
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'database_cleaner'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

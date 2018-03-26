@@ -28,6 +28,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
+  validates :avatar, allow_blank: true, format: { with: %r{.(gif|jpg|png)\Z}i, message: 'must be a URL for GIF, JPG or PNG image.' }
+  validates :email, presence: true,  format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
+  validates :password, presence: true, length: { minimum: 6 }, on: %i[create save]
   mount_uploader :avatar, AvatarUploader
   has_one :cart
   has_many :orders
