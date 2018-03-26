@@ -12,8 +12,8 @@ class CartProductsController < ApplicationController
 
   def update_quantity_params
     params.require(:cart_product)
-      .permit(
-        :quantity
-      )
+          .permit(
+            :quantity
+          )
   end
 end

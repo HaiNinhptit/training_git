@@ -30,26 +30,25 @@ class UsersController < ApplicationController
   end
 
   def order_confirm
-      @cart = Cart.find_by(id: params[:id])
-      order = current_user.orders.build()
-      order.save
-      @cart.cart_products.each do |cart_product|
-        order.order_products.create(product_id: cart_product.product_id, quantity: cart_product.quantity)
-      end
-      @cart.destroy
-      OrderConfirmationMailer.order_confirmation(current_user, order).deliver
+    @cart = Cart.find_by(id: params[:id])
+    order = current_user.orders.build
+    order.save
+    @cart.cart_products.each do |cart_product|
+      order.order_products.create(product_id: cart_product.product_id, quantity: cart_product.quantity)
+    end
+    @cart.destroy
+    OrderConfirmationMailer.order_confirmation(current_user, order).deliver
   end
 
-  def profile
-  end
+  def profile; end
 
   private
 
-    def dynamic_layout
-      if user_signed_in?
-        "application"
-      else
-        "guest"
-      end
+  def dynamic_layout
+    if user_signed_in?
+      'application'
+    else
+      'guest'
     end
+  end
 end

@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
             check = 1
           end
         end
-        session[:cart].insert(0, *['product_id' => params[:id], 'quantity' => 1]) if check.zero?
+        session[:cart].insert(0, 'product_id' => params[:id], 'quantity' => 1) if check.zero?
       else
         session[:cart] = ['product_id' => params[:id], 'quantity' => 1]
       end
@@ -41,16 +41,12 @@ class ProductsController < ApplicationController
   end
 
   def confirm_cart
-    if user_signed_in?
-      @cart = current_user.cart
-    end
+    @cart = current_user.cart if user_signed_in?
   end
 
   def delete_element_session_cart
     session[:cart].each do |arr_cart|
-      if arr_cart['product_id'].eql? params[:id]
-        session[:cart].delete(arr_cart)
-      end
+      session[:cart].delete(arr_cart) if arr_cart['product_id'].eql? params[:id]
     end
     redirect_to confirm_cart_path
   end
@@ -66,18 +62,18 @@ class ProductsController < ApplicationController
 
   private
 
-    def update_quantity_params_session
-      params
-        .permit(
-          :quantity
-        )
-    end
+  def update_quantity_params_session
+    params
+      .permit(
+        :quantity
+      )
+  end
 
-    def dynamic_layout
-      if user_signed_in?
-        "application"
-      else
-        "guest"
-      end
+  def dynamic_layout
+    if user_signed_in?
+      'application'
+    else
+      'guest'
     end
+  end
 end
