@@ -11,16 +11,16 @@
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
     %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
   %body
-    User
+    Guest
     %p.notice= notice
     %p.alert= alert
     %nav.navbar.navbar-default
       .container-fluid
         %ul.nav.navbar-nav
           %li.active
-            = link_to "Product", products_path
-          %li
             = link_to "Cart", carts_path
-          %li
-            = link_to "Profile", profile_path
+          %li.active
+            = link_to "Sign_in", new_user_session_path
+          %li.active
+            = link_to "Sign_up", new_user_registration_path
     = yield

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  layout :dynamic_layout
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
 
@@ -38,17 +39,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-   protected
+  protected
 
-  #If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << :avatar
-  end
+    #If you have extra params to permit, append them to the sanitizer.
+    def configure_sign_up_params
+      devise_parameter_sanitizer.for(:sign_up) << :avatar
+    end
 
-  #If you have extra params to permit, append them to the sanitizer.
-  def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update) << :avatar
-  end
+    #If you have extra params to permit, append them to the sanitizer.
+    def configure_account_update_params
+      devise_parameter_sanitizer.permit(:account_update) << :avatar
+    end
+
+  private
+
+    def dynamic_layout
+      if user_signed_in?
+        "application"
+      else
+        "guest"
+      end
+    end
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)

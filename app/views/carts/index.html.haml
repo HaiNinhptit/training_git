@@ -1,0 +1,55 @@
+.container
+  %h2 Cart
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Price
+        %th Description
+        %th Quantity
+        %th
+        %th
+    %tbody
+      - if user_signed_in?
+        - if current_user.cart.present?
+          - current_user.cart.cart_products.each do |cart_product|
+            %tr
+              %td
+                = cart_product.product.name
+              %td
+                = cart_product.product.price
+              %td
+                = cart_product.product.description
+              = form_for cart_product, url: cart_products_edit_path(id: cart_product.id) do |f|
+                %td
+                  = f.number_field :quantity, min: 0
+                %td
+                  = f.submit "Change"
+              %td
+                = link_to "Delete", cart_products_delete_path(id: cart_product.id), method: :delete
+        - else
+          %h1 Gio hang cua ban rong
+      - else
+        - if session[:cart].present?
+          - session[:cart].each do |cart_product|
+            - product = Product.find_by(id: cart_product['product_id'])
+            %tr
+              %td
+                = product.name
+              %td
+                = product.price
+              %td
+                = product.description
+              = form_tag edit_element_session_cart_path(id: cart_product['product_id']), method: :patch do
+                %td
+                  = number_field_tag :quantity, cart_product['quantity'], min: 0
+                %td
+                  = submit_tag "Change"
+              %td
+                = link_to "Delete", delete_element_session_cart_path(id: cart_product['product_id']), method: :delete
+        - else
+          %h1 Gio hang cua ban rong
+  - if user_signed_in? && session[:cart].nil? && current_user.cart.present?
+    = link_to "Order", order_path(id: current_user.cart.id), method: :get
+  - if session[:cart].present?
+    = link_to "Order", order_path(), method: :get

@@ -1,26 +1,15 @@
-!!!
-%html{:lang => "en"}
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Bootstrap Example
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :rel => "stylesheet"}/
-    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
-    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
-  %body
-    .container
-      %h2 Detail product
-      %table.table
-        %thead
-          %tr
-            %th Name
-            %th Price
-            %th Description
-            %th
-        %tbody
-          %tr
-            %td= @product.name
-            %td= @product.price
-            %td= @product.description
-            %td= link_to "Add to cart", add_to_cart_path(id: @product.id), method: :post
+.container
+  %h2 Detail product
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Price
+        %th Description
+        %th
+    %tbody
+      %tr
+        %td= @product.name
+        %td= @product.price
+        %td= @product.description
+        %td= link_to "Add to cart", add_to_cart_path(id: @product.id), method: :post

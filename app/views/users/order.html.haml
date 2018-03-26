@@ -1,28 +1,17 @@
-!!!
-%html{:lang => "en"}
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Bootstrap Example
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :rel => "stylesheet"}/
-    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
-    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
-  %body
-    .container
-      %h2 Order confirm
-      %table.table
-        %thead
-          %tr
-            %th Name
-            %th Price
-            %th Description
-            %th Quantity
-        %tbody
-          - @cart.cart_products.each do |cart_product|
-            %tr
-              %td= cart_product.product.name
-              %td= cart_product.product.price
-              %td= cart_product.product.description
-              %td= cart_product.quantity
-    = link_to "Order confirm ", order_confirm_path(id: @cart.id), method: :post
+.container
+  %h2 Order confirm
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Price
+        %th Description
+        %th Quantity
+    %tbody
+      - @cart.cart_products.each do |cart_product|
+        %tr
+          %td= cart_product.product.name
+          %td= cart_product.product.price
+          %td= cart_product.product.description
+          %td= cart_product.quantity
+= link_to "Order confirm ", order_confirm_path(id: @cart.id), method: :post

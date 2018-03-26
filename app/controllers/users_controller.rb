@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  layout :dynamic_layout
 
   def order
     if params[:id].present?
@@ -38,4 +39,17 @@ class UsersController < ApplicationController
       @cart.destroy
       OrderConfirmationMailer.order_confirmation(current_user, order).deliver
   end
+
+  def profile
+  end
+
+  private
+
+    def dynamic_layout
+      if user_signed_in?
+        "application"
+      else
+        "guest"
+      end
+    end
 end

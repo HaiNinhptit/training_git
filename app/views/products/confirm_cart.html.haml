@@ -1,56 +1,45 @@
-!!!
-%html{:lang => "en"}
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Bootstrap Example
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :rel => "stylesheet"}/
-    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
-    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
-  %body
-    .container
-      %h2 Cart confirm
-      %table.table
-        %thead
-          %tr
-            %th Name
-            %th Price
-            %th Description
-            %th Quantity
-            %th
-            %th
-        %tbody
-          - if user_signed_in?
-            - if @cart.present?
-              - @cart.cart_products.each do |cart_product|
-                %tr
-                  %td= cart_product.product.name
-                  %td= cart_product.product.price
-                  %td= cart_product.product.description
-                  = form_for cart_product, url: cart_products_edit_path(id: cart_product.id) do |f|
-                    %td
-                      = f.number_field :quantity, min: 0
-                    %td= f.submit "Change"
-                  %td= link_to "Delete", cart_products_delete_path(id: cart_product.id), method: :delete
-            - else
-              %h1 Gio hang cua ban rong
-          - else
-            - if session[:cart].present?
-              - session[:cart].each do |cart_product|
-                - product = Product.find_by(id: cart_product['product_id'])
-                %tr
-                  %td= product.name
-                  %td= product.price
-                  %td= product.description
-                  = form_tag edit_element_session_cart_path(id: cart_product['product_id']), method: :patch do
-                    %td
-                      = number_field_tag :quantity, cart_product['quantity'], min: 0
-                    %td= submit_tag "Change"
-                  %td= link_to "Delete", delete_element_session_cart_path(id: cart_product['product_id']), method: :delete
-            - else
-              %h1 Gio hang cua ban rong
-      - if user_signed_in? && session[:cart].nil?
-        = link_to "Order", order_path(id: @cart.id), method: :get
-      - if session[:cart].present?
-        = link_to "Order", order_path(), method: :get
+.container
+  %h2 Cart confirm
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Price
+        %th Description
+        %th Quantity
+        %th
+        %th
+    %tbody
+      - if user_signed_in?
+        - if @cart.present?
+          - @cart.cart_products.each do |cart_product|
+            %tr
+              %td= cart_product.product.name
+              %td= cart_product.product.price
+              %td= cart_product.product.description
+              = form_for cart_product, url: cart_products_edit_path(id: cart_product.id) do |f|
+                %td
+                  = f.number_field :quantity, min: 0
+                %td= f.submit "Change"
+              %td= link_to "Delete", cart_products_delete_path(id: cart_product.id), method: :delete
+        - else
+          %h1 Gio hang cua ban rong
+      - else
+        - if session[:cart].present?
+          - session[:cart].each do |cart_product|
+            - product = Product.find_by(id: cart_product['product_id'])
+            %tr
+              %td= product.name
+              %td= product.price
+              %td= product.description
+              = form_tag edit_element_session_cart_path(id: cart_product['product_id']), method: :patch do
+                %td
+                  = number_field_tag :quantity, cart_product['quantity'], min: 0
+                %td= submit_tag "Change"
+              %td= link_to "Delete", delete_element_session_cart_path(id: cart_product['product_id']), method: :delete
+        - else
+          %h1 Gio hang cua ban rong
+  - if user_signed_in? && session[:cart].nil?
+    = link_to "Order", order_path(id: @cart.id), method: :get
+  - if session[:cart].present?
+    = link_to "Order", order_path(), method: :get

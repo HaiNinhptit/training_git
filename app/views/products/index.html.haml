@@ -1,42 +1,31 @@
-!!!
-%html{:lang => "en"}
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Bootstrap Example
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :rel => "stylesheet"}/
-    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
-    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
-  %body
-    = link_to "Cart confirm", confirm_cart_path, method: :get
-    .container
-      %div
-        = search_form_for @q do |f|
-          = f.label :Name
-          = f.search_field :name_cont
-          = f.label :Price
-          = f.search_field :price_lteq
-          = f.label :Category_name
-          = f.search_field :category_name_cont
-          = f.submit
+= link_to "Cart confirm", confirm_cart_path, method: :get
+.container
+  %div
+    = search_form_for @q do |f|
+      = f.label :Name
+      = f.search_field :name_cont
+      = f.label :Price
+      = f.search_field :price_lteq
+      = f.label :Category_name
+      = f.search_field :category_name_cont
+      = f.submit
+  %tr
+    %th= sort_link(@q, :name, "Name")
+    %th= sort_link(@q, :price, "Price")
+  %h2 List Products
+  %table.table.table-striped
+    %thead
       %tr
-        %th= sort_link(@q, :name, "Name")
-        %th= sort_link(@q, :price, "Price")
-      %h2 List Products
-      %table.table.table-striped
-        %thead
-          %tr
-            %th Name
-            %th Price
-            %th Description
-            %th
-            %th Detail
-        %tbody
-          - @products.each do |product|
-            %tr
-              %td= product.name
-              %td= product.price
-              %td= product.description
-              %td= link_to "Add to cart", add_to_cart_path(id: product.id), method: :post, data: {confirm: "Are you sure?"}
-              %td= link_to "Show", product_path(product)
+        %th Name
+        %th Price
+        %th Description
+        %th
+        %th Detail
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td= product.name
+          %td= product.price
+          %td= product.description
+          %td= link_to "Add to cart", add_to_cart_path(id: product.id), method: :post, data: {confirm: "Are you sure?"}
+          %td= link_to "Show", product_path(product)

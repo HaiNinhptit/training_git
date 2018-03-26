@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :add_to_cart, :confirm_cart, :delete_element_session_cart, :edit_element_session_cart]
+  layout :dynamic_layout
+
   def index
     @q = Product.ransack(params[:q])
     @products = @q.result(distinct: true).includes(:category)
@@ -70,5 +71,13 @@ class ProductsController < ApplicationController
         .permit(
           :quantity
         )
+    end
+
+    def dynamic_layout
+      if user_signed_in?
+        "application"
+      else
+        "guest"
+      end
     end
 end
