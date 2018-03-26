@@ -31,6 +31,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'activeadmin'
 gem 'bootstrap', '~> 4.0.0'
 gem 'bootstrap-kaminari-views'
 gem 'carrierwave', '~> 1.0'
