@@ -11,7 +11,7 @@ AdminUser.destroy_all
 Category.create([
                   { name: 'Giày thể thao nữ' },
                   { name: 'Giày cao nữ' },
-                  { name:  'Giày bệt nữ' },
+                  { name: 'Giày bệt nữ' },
                   { name: 'Giày thể thao nam' },
                   { name: 'Giày da nam' },
                   { name: 'Giày thể thao trẻ em' }

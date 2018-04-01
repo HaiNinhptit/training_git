@@ -48,6 +48,8 @@ gem 'omniauth-google-oauth2'
 gem 'ransack'
 gem 'rubocop', require: false
 gem 'view_source_map'
+gem 'whenever', :require => false
+gem 'rails-controller-testing'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

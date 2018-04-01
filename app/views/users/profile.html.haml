@@ -1,12 +1,12 @@
 .container
-  %h2 Profile
+  %h2= t('profile')
   %form
     .form-group
-      %label{:for => "usr"} Name:
+      %label{:for => "usr"}= t('name')
       %input.form-control{:type => "text", :value => "#{current_user.name}"}/
     .form-group
-      %label{:for => "pwd"} Email:
+      %label{:for => "pwd"}= t('email')
       %input.form-control{:type => "text", :value => "#{current_user.email}"}/
     .form-group
-      %label{:for => "pwd"} Avatar:
+      %label{:for => "pwd"}= t('avatar')
       %img{:alt => "avatar", :height => "100", :src => "#{current_user.avatar}", :width => "100"}/

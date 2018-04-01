@@ -1,0 +1,10 @@
+.container
+  %h2 List User
+  %table.table
+    %thead
+      %tr
+        %th User name
+    %tbody
+      - @array_user.each do |user|
+        %tr
+          %td= user['name']

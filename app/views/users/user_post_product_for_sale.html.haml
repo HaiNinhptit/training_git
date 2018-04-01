@@ -1,0 +1,13 @@
+= form_for :product, :url => user_create_product_path(), :method => :post do |f|
+  Category: #{f.select :category_id, options_for_select(@array_category_id)}
+  %br/
+  %br/
+  Name : #{f.text_field :name}
+  %br/
+  Description : #{f.text_area :description}
+  %br/
+  Price : #{f.number_field :price}
+  %br/
+  Image : #{f.file_field :image}
+  %br/
+  = f.submit

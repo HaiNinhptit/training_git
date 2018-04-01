@@ -22,8 +22,12 @@ index do
   column :current_sign_in_at
   column :sign_in_count
   column :created_at
-  actions
+  actions do |id|
+    (link_to "List_products", admin_list_products_of_user_path(id)) + " " +
+    (link_to "Get salesman" , admin_salesman_path(id))
+  end
 end
+
 
 form do |f|
   f.inputs do

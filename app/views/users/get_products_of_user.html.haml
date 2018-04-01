@@ -1,0 +1,16 @@
+.container
+  %h2 Products of user
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Category
+        %th Description
+        %th Price
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td= product.name
+          %td= product.category.name
+          %td= product.description
+          %td= product.price

@@ -38,4 +38,11 @@
 %p
   Unhappy? #{button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}
 = link_to "Back", :back
+%br/
 = link_to "Sign_out", destroy_user_session_path, method: :delete
+%br/
+= link_to "List_products_user_post", get_products_of_user_path, method: :get
+%br/
+= link_to "Post_product", user_post_product_for_sale_path, method: :get
+%br/
+= link_to "Get_list_user_bought_your_product", get_user_bought_your_product_path, method: :get

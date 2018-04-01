@@ -1,13 +1,13 @@
 Hi #{@user.name}
 
-I send you a list of the product you have ordered
+= t('i_send_you_a_list_of_the_product_you_have_ordered')
 %table.table
   %thead
     %tr
-      %th Name
-      %th Price
-      %th Description
-      %th Quantity
+      %th= t('name')
+      %th= t('price')
+      %th= t('description')
+      %th= t('quantity')
   %tbody
     - @order.order_products.each do |order_product|
       %tr

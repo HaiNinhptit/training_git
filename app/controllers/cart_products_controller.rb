@@ -1,4 +1,5 @@
 class CartProductsController < ApplicationController
+  before_action :authenticate_user!
   def edit
     CartProduct.find_by(id: params[:id]).update(quantity: update_quantity_params[:quantity])
   end

@@ -1,12 +1,12 @@
 .container
-  %h2 Cart confirm
+  %h2= t('cart_confirm')
   %table.table
     %thead
       %tr
-        %th Name
-        %th Price
-        %th Description
-        %th Quantity
+        %th= t('name')
+        %th= t('price')
+        %th= t('description')
+        %th= t('quantity')
         %th
         %th
     %tbody
@@ -20,10 +20,10 @@
               = form_for cart_product, url: cart_products_edit_path(id: cart_product.id) do |f|
                 %td
                   = f.number_field :quantity, min: 0
-                %td= f.submit "Change"
-              %td= link_to "Delete", cart_products_delete_path(id: cart_product.id), method: :delete
+                %td= f.submit t('change')
+              %td= link_to t('delete'), cart_products_delete_path(id: cart_product.id), method: :delete
         - else
-          %h1 Gio hang cua ban rong
+          %h1= t('your_cart_is_empty')
       - else
         - if session[:cart].present?
           - session[:cart].each do |cart_product|
@@ -35,11 +35,11 @@
               = form_tag edit_element_session_cart_path(id: cart_product['product_id']), method: :patch do
                 %td
                   = number_field_tag :quantity, cart_product['quantity'], min: 0
-                %td= submit_tag "Change"
-              %td= link_to "Delete", delete_element_session_cart_path(id: cart_product['product_id']), method: :delete
+                %td= submit_tag t('change')
+              %td= link_to t('delete'), delete_element_session_cart_path(id: cart_product['product_id']), method: :delete
         - else
-          %h1 Gio hang cua ban rong
+          %h1= t('your_cart_is_empty')
   - if user_signed_in? && session[:cart].nil?
-    = link_to "Order", order_path(id: @cart.id), method: :get
+    = link_to t('order'), order_path(id: @cart.id), method: :get
   - if session[:cart].present?
-    = link_to "Order", order_path(), method: :get
+    = link_to t('order'), order_path, method: :get

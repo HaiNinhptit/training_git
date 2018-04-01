@@ -31,13 +31,34 @@ class UsersController < ApplicationController
 
   def order_confirm
     @cart = Cart.find_by(id: params[:id])
-    order = current_user.orders.build
+    order = current_user.orders.build(created_at: Time.zone.today.to_s.to_date)
     order.save
     @cart.cart_products.each do |cart_product|
-      order.order_products.create(product_id: cart_product.product_id, quantity: cart_product.quantity)
+      order.order_products.create(product_id: cart_product.product_id, quantity: cart_product.quantity, created_at: Time.zone.today.to_s.to_date)
     end
     @cart.destroy
     OrderConfirmationMailer.order_confirmation(current_user, order).deliver
+  end
+
+  def user_post_product_for_sale
+    categorys = Category.all
+    @array_category_id = categorys.pluck(:name, :id)
+  end
+
+  def user_create_product
+    current_user.products.create(name: user_post_product_for_sale_params[:name],
+                                 category_id: user_post_product_for_sale_params[:category_id],
+                                 description: user_post_product_for_sale_params[:description],
+                                 image: user_post_product_for_sale_params[:image],
+                                 price: user_post_product_for_sale_params[:price])
+  end
+
+  def get_users_bought_your_product
+    @array_user = current_user.get_users_bought_your_product
+  end
+
+  def get_products_of_user
+    @products = current_user.products
   end
 
   def profile; end
@@ -50,5 +71,17 @@ class UsersController < ApplicationController
     else
       'guest'
     end
+  end
+
+  def user_post_product_for_sale_params
+    params
+      .require(:product)
+      .permit(
+        :category_id,
+        :name,
+        :description,
+        :image,
+        :price
+      )
   end
 end

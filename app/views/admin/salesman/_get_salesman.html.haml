@@ -1,0 +1,14 @@
+.container
+  %h2 Products of user
+  - if params[:format].nil?
+    %h1 Ban nen bam chon xem nguoi dung da mua hang cua ai tai trang danh sach user
+  - else
+    %table.table
+      %thead
+        %tr
+          %th User id
+      %tbody
+        - User.find_by(id: params[:format]).get_salesman.each do |user|
+          %tr
+            %td
+              = user['id']

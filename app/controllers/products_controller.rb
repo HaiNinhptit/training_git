@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
       if session[:cart].present?
         check = 0
         session[:cart].each do |arr_cart|
-          if arr_cart['product_id'].eql? params[:id].to_i
+          if arr_cart['product_id'].to_i.eql? params[:id].to_i
             arr_cart['quantity'] += 1
             check = 1
           end

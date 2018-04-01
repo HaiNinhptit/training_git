@@ -1,15 +1,15 @@
 .container
-  %h2 Detail product
+  %h2= t('detail_product')
   %table.table
     %thead
       %tr
-        %th Name
-        %th Price
-        %th Description
+        %th= t('name')
+        %th= t('price')
+        %th= t('description')
         %th
     %tbody
       %tr
         %td= @product.name
         %td= @product.price
         %td= @product.description
-        %td= link_to "Add to cart", add_to_cart_path(id: @product.id), method: :post
+        %td= link_to t('add_to_cart'), add_to_cart_path(id: @product.id), method: :post

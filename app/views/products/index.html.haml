@@ -1,31 +1,41 @@
-= link_to "Cart confirm", confirm_cart_path, method: :get
+= link_to t('cart_confirm'), confirm_cart_path, method: :get
+= link_to t('english'), locale:"en"
+= link_to t('vietnamese'), locale:"vi"
 .container
   %div
     = search_form_for @q do |f|
-      = f.label :Name
+      = f.label t('name')
       = f.search_field :name_cont
-      = f.label :Price
+      = f.label t('price')
       = f.search_field :price_lteq
-      = f.label :Category_name
+      = f.label t('category_name')
       = f.search_field :category_name_cont
       = f.submit
   %tr
-    %th= sort_link(@q, :name, "Name")
-    %th= sort_link(@q, :price, "Price")
-  %h2 List Products
+    %th
+      = sort_link(@q, t('name'), "Name")
+    %th
+      = sort_link(@q, t('price'), "Price")
+  %h2= t('list_products')
   %table.table.table-striped
     %thead
       %tr
-        %th Name
-        %th Price
-        %th Description
+        %th= t('name')
+        %th= t('price')
+        %th= t('description')
         %th
-        %th Detail
+        %th= t('detail')
     %tbody
       - @products.each do |product|
         %tr
-          %td= product.name
-          %td= product.price
-          %td= product.description
-          %td= link_to "Add to cart", add_to_cart_path(id: product.id), method: :post, data: {confirm: "Are you sure?"}
-          %td= link_to "Show", product_path(product)
+          %td
+            = product.name
+          %td
+            = product.price
+          %td
+            = product.description
+          %td
+            = link_to t('add_to_cart'), add_to_cart_path(id: product.id), method: :post, data: {confirm: "Are you sure?"}
+          %td
+            = link_to t('show'), product_path(product)
+
