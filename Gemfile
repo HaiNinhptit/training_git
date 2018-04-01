@@ -41,7 +41,6 @@ gem 'haml-rails', '~> 1.0'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'mini_magick'
-gem 'mysql2', '~> 0.4.9'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
@@ -69,12 +68,18 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+  gem 'mysql2', '~> 0.4.9'
 end
 
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'database_cleaner'
   gem 'simplecov', require: false
+end
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
