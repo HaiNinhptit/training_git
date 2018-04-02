@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'products#index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users,
@@ -9,7 +10,6 @@ Rails.application.routes.draw do
   # scope "(:locale)", locale: /en|vi/ do
   #   root to: 'products#index'
   # end
-  root to: 'products#index'
   post 'user/add_to_cart/:id', to: 'products#add_to_cart', as: 'add_to_cart'
   get 'user/confirm_cart', to: 'products#confirm_cart', as: 'confirm_cart'
   patch 'user/cart_product/edit/:id', to: 'cart_products#edit', as: 'cart_products_edit'
