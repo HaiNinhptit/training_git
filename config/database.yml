@@ -22,5 +22,8 @@ test:
   database: training_rails
 
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
   database: training_rails
+  pool: 5
+  timeout: 5000
