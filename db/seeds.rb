@@ -31,4 +31,4 @@ Product.create!([
                  { name: 'Giày thể thao hồng', description: 'Có đủ size', category_id: 6, price: 350_000, user_id: 1 },
                  { name: 'Giày thể thao quai dán', description: 'Có đủ size, có 2 màu trắng, đen', category_id: 6, price: 480_000, user_id: 1 }
                ])
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
