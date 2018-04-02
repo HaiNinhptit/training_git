@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   resources :products
   resources :carts
-  scope "(:locale)", locale: /en|vi/ do
-    root to: 'products#index'
-  end
+  # scope "(:locale)", locale: /en|vi/ do
+  #   root to: 'products#index'
+  # end
+  root to: 'products#index'
   post 'user/add_to_cart/:id', to: 'products#add_to_cart', as: 'add_to_cart'
   get 'user/confirm_cart', to: 'products#confirm_cart', as: 'confirm_cart'
   patch 'user/cart_product/edit/:id', to: 'cart_products#edit', as: 'cart_products_edit'

@@ -58,6 +58,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'mysql2', '~> 0.4.9'
 end
 
 group :development do
@@ -66,7 +67,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
-  gem 'mysql2', '~> 0.4.9'
 end
 
 group :test do
