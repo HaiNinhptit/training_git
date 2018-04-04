@@ -8,7 +8,7 @@
         %tr
           %th User id
       %tbody
-        - User.find_by(id: params[:format]).get_salesman.each do |user|
+        - User.bought_products_for(User.find_by(id: params[:format])).each do |user|
           %tr
             %td
-              = user['id']
+              = user.id

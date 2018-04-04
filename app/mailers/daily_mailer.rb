@@ -1,9 +1,10 @@
 class DailyMailer < ApplicationMailer
-  default from: 'haininh@zinza.com'
+  default from: ENV['MAIL_USER_NAME']
+  layout 'mailer'
 
   def send_daily_mailer(user)
     @user = user
-    @list_products = Order.orders_in_day
+    @total = Order.revenue_in_day
     mail(to: @user.email, subject: 'Daily mailer')
   end
 end

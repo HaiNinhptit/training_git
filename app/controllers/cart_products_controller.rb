@@ -1,12 +1,13 @@
 class CartProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_cart_product
+
   def edit
-    CartProduct.find_by(id: params[:id]).update(quantity: update_quantity_params[:quantity])
+    @cat_product.update(quantity: update_quantity_params[:quantity])
   end
 
   def destroy
-    CartProduct.find_by(id: params[:id]).destroy
-    redirect_to confirm_cart_path
+    redirect_to confirm_cart_path if @cat_product.destroy
   end
 
   private
@@ -16,5 +17,9 @@ class CartProductsController < ApplicationController
           .permit(
             :quantity
           )
+  end
+
+  def find_cart_product
+    @cat_product = CartProduct.find_by(id: params[:id])
   end
 end

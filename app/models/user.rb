@@ -26,65 +26,43 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
+         :omniauthable, omniauth_providers: %i[facebook google_oauth2]
+
+  has_one :cart
+
+  has_many :orders
+  has_many :order_products, through: :orders
+  has_many :products
+  has_many :purchase_products, through: :order_products, source: :product
+  has_many :seller_of_purchase_products, -> { distinct }, through: :purchase_products, source: :user
+  has_many :orders_products_contains_your_products, through: :products, source: :order_products
+  has_many :orders_contains_your_products, through: :orders_products_contains_your_products, source: :order
+  has_many :users_buy_your_products, -> { distinct }, through: :orders_contains_your_products, source: :user
 
   validates :avatar, allow_blank: true, format: { with: /.(gif|jpg|png)\Z/i, message: 'must be a URL for GIF, JPG or PNG image.' }
   validates :email, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
-  validates :password, presence: true, length: { minimum: 6 }, on: %i(create save)
+  validates :password, presence: true, length: { minimum: 6 }, on: %i[create save]
+
   mount_uploader :avatar, AvatarUploader
-  has_one :cart
-  has_many :orders
-  has_many :products
 
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session['devise.facebook_data'] &&
-                session['devise.facebook_data']['extra']['raw_info']
-        user.email = data['email'] if user.email.blank?
-      end
-    end
-  end
+  scope :who_buy_your_products, ->(user) { where(id: user.orders_contains_your_products.map(&:user_id)) }
+  scope :bought_products_for, ->(user) { where(id: user.purchase_products.map(&:user_id)) }
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0, 20]
-      user.name = auth.info.name
-    end
-  end
+  #---------sign_in google, facebook-----------------------------------
+  # def self.new_with_session(params, session)
+  #   super.tap do |user|
+  #     if data = session['devise.facebook_data'] &&
+  #               session['devise.facebook_data']['extra']['raw_info']
+  #       user.email = data['email'] if user.email.blank?
+  #     end
+  #   end
+  # end
 
-  def get_users_bought_your_product
-    products = self.products
-    array_user_bought = []
-    products.each do |product|
-      orders = product.orders
-      orders.each do |order|
-        check = 0
-        if array_user_bought.any?
-          array_user_bought.each do |user|
-            check = 1 if user['user_id'] == order.user_id
-          end
-        end
-        array_user_bought.push('user_id' => order.user_id, 'name' => order.user.name.presence || 'Khong co ten') if check.zero?
-      end
-    end
-    array_user_bought
-  end
-
-  def get_salesman
-    array_user = []
-    orders = self.orders
-    orders.each do |order|
-      order.products.each do |product|
-        check = 0
-        if array_user.any?
-          array_user.each do |user|
-            check = 1 if user['id'] == product.user_id
-          end
-        end
-        array_user.push('id' => product.user_id) if check.zero?
-      end
-    end
-    array_user
-  end
+  # def self.from_omniauth(auth)
+  #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+  #     user.email = auth.info.email
+  #     user.password = Devise.friendly_token[0, 20]
+  #     user.name = auth.info.name
+  #   end
+  # end
 end

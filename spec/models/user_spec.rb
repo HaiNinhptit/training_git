@@ -34,4 +34,38 @@ RSpec.describe User, type: :model do
     it { should have_many(:orders) }
     it { should have_one(:cart) }
   end
+
+  VALID_EMAIL = [
+    'email@domain.com',
+    'firstname.lastname@domain.com',
+    'email@subdomain.domain.com',
+    'firstname+lastname@domain.com',
+    '1234567890@domain.com',
+    'email@domain-one.com',
+    'email@domain.name',
+    'email@domain.co.jp'
+  ].freeze
+
+  INVALID_EMAIL = [
+    'sahara @yahoo.jp',
+    'plainaddress',
+    '@domain.com',
+    'Joe Smith <email@domain.com>',
+    'email.domain.com',
+    'email@domain@domain.com',
+    'email@domain',
+    'email@111.222.333.44444'
+  ].freeze
+
+  describe 'valid email' do
+    VALID_EMAIL.each do |email|
+      it { is_expected.to allow_value(email).for(:email) }
+    end
+  end
+
+  describe 'invalid email' do
+    INVALID_EMAIL.each do |email|
+      it { is_expected.to_not allow_value(email).for(:email) }
+    end
+  end
 end

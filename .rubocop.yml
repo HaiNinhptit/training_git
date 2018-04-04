@@ -69,6 +69,9 @@ Metrics/ModuleLength:
 Metrics/AbcSize:
   Enabled: false
 
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - '**/*_spec.rb'

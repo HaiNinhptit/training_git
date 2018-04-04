@@ -1,17 +1,3 @@
 .container
-  %h2 List Products
-  %table.table
-    %thead
-      %tr
-        %th Product Name
-        %th Quantity
-        %th Price
-    %tbody
-      - @list_products.each do |product|
-        %tr
-          %td
-            = Product.find_by(id: product['id']).name
-          %td
-            = product['quantity']
-          %td
-            = Product.find_by(id: product['id']).price
+  Tong tien cua ngay hom nay la: #{@total}
+

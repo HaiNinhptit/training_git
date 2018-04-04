@@ -1,6 +1,4 @@
 class ProductsController < ApplicationController
-  layout :dynamic_layout
-
   def index
     @q = Product.ransack(params[:q])
     @products = @q.result(distinct: true).includes(:category)
@@ -13,11 +11,10 @@ class ProductsController < ApplicationController
   def add_to_cart
     if user_signed_in?
       if current_user.cart.nil?
-        cart = current_user.build_cart
-        cart.save
+        cart = current_user.create_cart
         cart.cart_products.create(product_id: params[:id])
       else
-        cart_product = current_user.cart.cart_products.where(product_id: params[:id]).first
+        cart_product = current_user.cart.cart_products.find_by(product_id: params[:id])
         if cart_product.nil?
           current_user.cart.cart_products.create(product_id: params[:id])
         else
@@ -25,18 +22,7 @@ class ProductsController < ApplicationController
         end
       end
     else
-      if session[:cart].present?
-        check = 0
-        session[:cart].each do |arr_cart|
-          if arr_cart['product_id'].to_i.eql? params[:id].to_i
-            arr_cart['quantity'] += 1
-            check = 1
-          end
-        end
-        session[:cart].insert(0, 'product_id' => params[:id], 'quantity' => 1) if check.zero?
-      else
-        session[:cart] = ['product_id' => params[:id], 'quantity' => 1]
-      end
+      get_session_cart params[:id]
     end
   end
 
@@ -45,17 +31,14 @@ class ProductsController < ApplicationController
   end
 
   def delete_element_session_cart
-    session[:cart].each do |arr_cart|
-      session[:cart].delete(arr_cart) if arr_cart['product_id'].eql? params[:id]
-    end
+    cart = session[:cart].detect { |c| c['product_id'].eql? params[:id] }
+    session[:cart].delete(cart) if cart.present?
     redirect_to confirm_cart_path
   end
 
   def edit_element_session_cart
     session[:cart].each do |arr_cart|
-      if arr_cart['product_id'].eql? params[:id]
-        arr_cart['quantity'] = update_quantity_params_session[:quantity]
-      end
+      arr_cart['quantity'] = params[:quantity] if arr_cart['product_id'].eql? params[:id]
     end
     redirect_to confirm_cart_path
   end
@@ -69,11 +52,17 @@ class ProductsController < ApplicationController
       )
   end
 
-  def dynamic_layout
-    if user_signed_in?
-      'application'
+  def get_session_cart(id)
+    if session[:cart].present?
+      if session[:cart].detect { |p| p['product_id'].to_i.eql? id.to_i }.nil?
+        session[:cart].insert(0, 'product_id' => id, 'quantity' => 1)
+      else
+        session[:cart].each do |arr_cart|
+          arr_cart['quantity'] += 1 if arr_cart['product_id'].to_i.eql? id.to_i
+        end
+      end
     else
-      'guest'
+      session[:cart] = ['product_id' => id, 'quantity' => 1]
     end
   end
 end

@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  layout :dynamic_layout
 
   def order
     if params[:id].present?
@@ -18,8 +17,7 @@ class UsersController < ApplicationController
           current_user.cart.cart_products.create(product_id: arr_cart['product_id'], quantity: arr_cart['quantity']) if check.zero?
         end
       else
-        cart = current_user.build_cart
-        cart.save
+        cart = current_user.create_cart
         session[:cart].each do |arr_cart|
           cart.cart_products.create(product_id: arr_cart['product_id'], quantity: arr_cart['quantity'])
         end
@@ -53,9 +51,7 @@ class UsersController < ApplicationController
                                  price: user_post_product_for_sale_params[:price])
   end
 
-  def get_users_bought_your_product
-    @array_user = current_user.get_users_bought_your_product
-  end
+  def get_users_bought_your_product; end
 
   def get_products_of_user
     @products = current_user.products
@@ -64,14 +60,6 @@ class UsersController < ApplicationController
   def profile; end
 
   private
-
-  def dynamic_layout
-    if user_signed_in?
-      'application'
-    else
-      'guest'
-    end
-  end
 
   def user_post_product_for_sale_params
     params

@@ -1,5 +1,6 @@
 class OrderConfirmationMailer < ApplicationMailer
-  default from: 'haininh@zinza.com'
+  default from: ENV['MAIL_USER_NAME']
+  layout 'mailer'
 
   def order_confirmation(user, order)
     @user = user

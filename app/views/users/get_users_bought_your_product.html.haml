@@ -3,8 +3,8 @@
   %table.table
     %thead
       %tr
-        %th User name
+        %th User ID
     %tbody
-      - @array_user.each do |user|
+      - User.who_buy_your_products(current_user).each do |user|
         %tr
-          %td= user['name']
+          %td= user.id
